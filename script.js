@@ -1,23 +1,36 @@
 const noteCard = document.querySelectorAll('p')
 const noteAddForm = document.querySelector('#add-note')
 const noteContentInput = document.querySelector('#content-note')
-const notes = {
-    
+let notes = []
+
+const notesJSON = localStorage.getItem('notes')
+if (notesJSON !== null) {
+    notes = JSON.parse(notesJSON)
 }
-for (i=0;i<=20;i++) {
-    const objectLength = Object.keys(notes).length
-    localStorage.getItem(`Note${(objectLength + 1)}`)
+
+const showNotes = function () {
+    notes.forEach(function (note) {
+        const noteContainer = document.createElement('p')
+        noteContainer.textContent = note.content
+        document.querySelector('.content').appendChild(noteContainer)
+    })
 }
+showNotes()
+
+const refreshNotes = function () {
+    document.querySelector('.content').remove()
+    var refreshedContainer = document.createElement('div')
+    refreshedContainer.className = 'content d-flex align-items-start flex-wrap'
+    document.querySelector('.notes-container').appendChild(refreshedContainer)
+}
+
+
 noteAddForm.addEventListener('submit', function(e, note) {
     e.preventDefault()
-    const objectLength = Object.keys(notes).length
-    if (noteContentInput.value != "") {
-        notes[`Note${(objectLength + 1)}`] = noteContentInput.value
-        localStorage.setItem(`Note${(objectLength + 1)}`, noteContentInput.value)
-        noteContentInput.value = ''
-    }
-    if (notes.lenght > 0) {
-        document.removeChild(noteCard);
-    }
-    console.log(notes)
+    refreshNotes()
+    notes.push({
+        content: noteContentInput.value
+    })
+    localStorage.setItem('notes', JSON.stringify(notes))
+    showNotes()
 })
