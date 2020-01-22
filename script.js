@@ -34,7 +34,8 @@ noteAddForm.addEventListener('submit', function(e, note) {
     refreshNotes()
     notes.push({
         content: noteContentInput.value,
-        id: notes.length
+        id: notes.length,
+        added: new Date()
     })
     localStorage.setItem('notes', JSON.stringify(notes))
     noteContentInput.value = ''
