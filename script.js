@@ -32,5 +32,6 @@ noteAddForm.addEventListener('submit', function(e, note) {
         content: noteContentInput.value
     })
     localStorage.setItem('notes', JSON.stringify(notes))
+    noteContentInput.value = ''
     showNotes()
 })
