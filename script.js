@@ -9,10 +9,15 @@ if (notesJSON !== null) {
 }
 
 const showNotes = function () {
-    notes.forEach(function (note) {
+    notes.forEach(function (note, id) {
         const noteContainer = document.createElement('p')
+        const noteDeletionTrigger = document.createElement('i')
+        noteContainer.className = `d-flex flex-column flex-wrap note-${id}`
+        noteDeletionTrigger.className = 'fas fa-times delete-note'
         noteContainer.textContent = note.content
+        noteContainer.appendChild(noteDeletionTrigger)
         document.querySelector('.content').appendChild(noteContainer)
+
     })
 }
 showNotes()
@@ -24,12 +29,12 @@ const refreshNotes = function () {
     document.querySelector('.notes-container').appendChild(refreshedContainer)
 }
 
-
 noteAddForm.addEventListener('submit', function(e, note) {
     e.preventDefault()
     refreshNotes()
     notes.push({
-        content: noteContentInput.value
+        content: noteContentInput.value,
+        id: notes.length
     })
     localStorage.setItem('notes', JSON.stringify(notes))
     noteContentInput.value = ''
