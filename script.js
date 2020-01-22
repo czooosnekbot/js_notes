@@ -1,4 +1,3 @@
-const noteCard = document.querySelectorAll('p')
 const noteAddForm = document.querySelector('#add-note')
 const noteContentInput = document.querySelector('#content-note')
 let notes = []
@@ -11,13 +10,10 @@ if (notesJSON !== null) {
 const showNotes = function () {
     notes.forEach(function (note, id) {
         const noteContainer = document.createElement('p')
-        const noteDeletionTrigger = document.createElement('i')
-        noteContainer.className = `d-flex flex-column flex-wrap note-${id}`
-        noteDeletionTrigger.className = 'fas fa-times delete-note'
+        noteContainer.className = `d-flex flex-column flex-wrap note`
+        noteContainer.id = id
         noteContainer.textContent = note.content
-        noteContainer.appendChild(noteDeletionTrigger)
         document.querySelector('.content').appendChild(noteContainer)
-
     })
 }
 showNotes()
@@ -29,15 +25,32 @@ const refreshNotes = function () {
     document.querySelector('.notes-container').appendChild(refreshedContainer)
 }
 
-noteAddForm.addEventListener('submit', function(e, note) {
-    e.preventDefault()
-    refreshNotes()
-    notes.push({
-        content: noteContentInput.value,
-        id: notes.length,
-        added: new Date()
+const newNote = function () {
+    noteAddForm.addEventListener('submit', function(e, note) {
+        e.preventDefault()
+        refreshNotes()
+        notes.push({
+            content: noteContentInput.value,
+            added: new Date()
+        })
+        localStorage.setItem('notes', JSON.stringify(notes))
+        noteContentInput.value = ''
+        showNotes()
     })
-    localStorage.setItem('notes', JSON.stringify(notes))
-    noteContentInput.value = ''
-    showNotes()
-})
+}
+newNote()
+
+const noteCard = document.querySelectorAll('.note')
+
+const deleteNote = function () {
+    noteCard.forEach(function (target) {
+        target.addEventListener('click', function (e) {
+            notes.splice(target.id,1)
+            refreshNotes()
+            showNotes()
+            localStorage.setItem('notes', JSON.stringify(notes))
+            localStorage.getItem('notes')
+        })
+    })
+}
+deleteNote()
