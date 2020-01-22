@@ -20,7 +20,7 @@ showNotes()
 const refreshNotes = function () {
     document.querySelector('.content').remove()
     var refreshedContainer = document.createElement('div')
-    refreshedContainer.className = 'content d-flex align-items-start flex-wrap'
+    refreshedContainer.className = 'content col-12 col-md-10 d-flex align-items-start flex-wrap'
     document.querySelector('.notes-container').appendChild(refreshedContainer)
 }
 
