@@ -80,6 +80,7 @@ const editNote = function () {
                 updateLocalStorage()
                 refreshNotes()
                 showNotes()
+                $("#editModal").modal('hide')
             })
         })
     })
