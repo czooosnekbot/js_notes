@@ -47,18 +47,6 @@ newNote()
 
 const noteCard = document.querySelectorAll('.note')
 
-const deleteNote = function () {
-    noteCard.forEach(function (target) {
-        target.addEventListener('contextmenu', function (e) {
-            notes.splice(target.id,1)
-            refreshNotes()
-            showNotes()
-            updateLocalStorage()
-        })
-    })
-}
-deleteNote()
-
 const editNote = function () {
     noteCard.forEach(function (target) {
         target.addEventListener('click', function (e) {
@@ -66,6 +54,7 @@ const editNote = function () {
             const modal = document.querySelector('#editModal')
             const modalTextArea = document.querySelector('#editNoteValue')
             const buttonSaveNote = document.querySelector('#saveNote')
+            const buttonRemoveNote = document.querySelector('#removeNote')
             const containerId = this.id
             $("#editModal").modal('toggle')
             modalTextArea.value = e.target.innerHTML
@@ -80,6 +69,13 @@ const editNote = function () {
                 updateLocalStorage()
                 refreshNotes()
                 showNotes()
+                $("#editModal").modal('hide')
+            })
+            buttonRemoveNote.addEventListener('click', function (e) {
+                notesArray.splice(containerId,1)
+                refreshNotes()
+                showNotes()
+                updateLocalStorage()
                 $("#editModal").modal('hide')
             })
         })
