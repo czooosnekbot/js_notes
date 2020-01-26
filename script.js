@@ -61,8 +61,12 @@ const editNote = function () {
             const colorPicker = document.querySelector('#colorValue')
             $("#editModal").modal('toggle')
             modalTextArea.value = e.target.innerHTML
-            colorPicker.value = notesArray[this.id].color
-            colorPicker.style.background = notesArray[this.id].color
+            if (notesArray[this.id].color != undefined) {
+                colorPicker.value = notesArray[this.id].color
+                colorPicker.style.background = notesArray[this.id].color
+            } else {
+                colorPicker.value = 'Brak'
+            }
             buttonSaveNote.addEventListener('click', function (e) {
                 const pushChanges = function () {
                     notesArray[containerId] = {
