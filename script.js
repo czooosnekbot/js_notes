@@ -71,6 +71,7 @@ const editNote = function () {
                 const pushChanges = function () {
                     notesArray[containerId] = {
                         content: modalTextArea.value,
+                        changed: new Date(),
                         color: colorPicker.value
                     }
                 }
