@@ -18,6 +18,7 @@ const showNotes = function () {
         noteContainer.className = `d-flex flex-column flex-wrap note`
         noteContainer.textContent = note.content
         noteContainer.id = id
+        noteContainer.style.background = notes[id].color
         document.querySelector('.content').appendChild(noteContainer)
     })
 }
@@ -36,7 +37,8 @@ const newNote = function () {
         refreshNotes()
         notes.push({
             content: noteContentInput.value,
-            added: new Date()
+            added: new Date(),
+            color: 'ebeb00'
         })
         localStorage.setItem('notes', JSON.stringify(notes))
         noteContentInput.value = ''
@@ -56,12 +58,16 @@ const editNote = function () {
             const buttonSaveNote = document.querySelector('#saveNote')
             const buttonRemoveNote = document.querySelector('#removeNote')
             const containerId = this.id
+            const colorPicker = document.querySelector('#colorValue')
             $("#editModal").modal('toggle')
             modalTextArea.value = e.target.innerHTML
+            colorPicker.value = notesArray[this.id].color
+            colorPicker.style.background = notesArray[this.id].color
             buttonSaveNote.addEventListener('click', function (e) {
                 const pushChanges = function () {
                     notesArray[containerId] = {
                         content: modalTextArea.value,
+                        color: `#${colorPicker.value}`
                     }
                 }
                 pushChanges()
