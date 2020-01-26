@@ -18,7 +18,7 @@ const showNotes = function () {
         noteContainer.className = `d-flex flex-column flex-wrap note`
         noteContainer.textContent = note.content
         noteContainer.id = id
-        noteContainer.style.background = notes[id].color
+        noteContainer.style.background = `#${notes[id].color}`
         document.querySelector('.content').appendChild(noteContainer)
     })
 }
@@ -63,7 +63,7 @@ const editNote = function () {
             modalTextArea.value = e.target.innerHTML
             if (notesArray[this.id].color != undefined) {
                 colorPicker.value = notesArray[this.id].color
-                colorPicker.style.background = notesArray[this.id].color
+                colorPicker.style.background = `#${notesArray[this.id].color}`
             } else {
                 colorPicker.value = 'Brak'
             }
@@ -71,7 +71,7 @@ const editNote = function () {
                 const pushChanges = function () {
                     notesArray[containerId] = {
                         content: modalTextArea.value,
-                        color: `#${colorPicker.value}`
+                        color: colorPicker.value
                     }
                 }
                 pushChanges()
