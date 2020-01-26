@@ -25,7 +25,7 @@ showNotes()
 
 const refreshNotes = function () {
     document.querySelector('.content').remove()
-    var refreshedContainer = document.createElement('div')
+    let refreshedContainer = document.createElement('div')
     refreshedContainer.className = 'content col-12 col-md-10 d-flex align-items-start flex-wrap'
     document.querySelector('.notes-container').appendChild(refreshedContainer)
 }
@@ -41,6 +41,7 @@ const newNote = function () {
         localStorage.setItem('notes', JSON.stringify(notes))
         noteContentInput.value = ''
         showNotes()
+        location.reload()
     })
 }
 newNote()
@@ -51,7 +52,6 @@ const editNote = function () {
     noteCard.forEach(function (target) {
         target.addEventListener('click', function (e) {
             let notesArray = notes
-            const modal = document.querySelector('#editModal')
             const modalTextArea = document.querySelector('#editNoteValue')
             const buttonSaveNote = document.querySelector('#saveNote')
             const buttonRemoveNote = document.querySelector('#removeNote')
@@ -59,7 +59,6 @@ const editNote = function () {
             $("#editModal").modal('toggle')
             modalTextArea.value = e.target.innerHTML
             buttonSaveNote.addEventListener('click', function (e) {
-                console.log(notesArray.length)
                 const pushChanges = function () {
                     notesArray[containerId] = {
                         content: modalTextArea.value,
@@ -67,16 +66,14 @@ const editNote = function () {
                 }
                 pushChanges()
                 updateLocalStorage()
-                refreshNotes()
-                showNotes()
                 $("#editModal").modal('hide')
+                location.reload()
             })
             buttonRemoveNote.addEventListener('click', function (e) {
                 notesArray.splice(containerId,1)
-                refreshNotes()
-                showNotes()
                 updateLocalStorage()
                 $("#editModal").modal('hide')
+                location.reload()
             })
         })
     })
