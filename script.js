@@ -70,6 +70,7 @@ const editNote = function () {
             if (notesArray[this.id].color != undefined) {
                 colorPicker.value = notesArray[this.id].color
                 colorPicker.style.background = `#${notesArray[this.id].color}`
+                colorPicker.style.transition = '.4s'
             } else {
                 colorPicker.value = 'Brak'
             }
