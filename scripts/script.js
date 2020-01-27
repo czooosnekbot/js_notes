@@ -3,7 +3,7 @@ const noteContentInput = document.querySelector('#content-note')
 let notes = []
 
 const notesJSON = localStorage.getItem('notes')
-if (notesJSON !== null) {
+if (notesJSON !== null & notesJSON !== '') {
     notes = JSON.parse(notesJSON)
 }
 
@@ -11,6 +11,19 @@ const updateLocalStorage = function () {
     localStorage.setItem('notes', JSON.stringify(notes))
     localStorage.getItem('notes')
 }
+
+const setTheme = function () {
+    const stylesheet = document.querySelector('#stylesheetLink')
+    const selectedTheme = localStorage.getItem('theme')
+    if (selectedTheme === 'dark') {
+        stylesheet.href = './css/dark.css'
+    } else if (selectedTheme === 'light') {
+        stylesheet.href = './css/style.css'
+    } else {
+        return
+    }
+}
+setTheme()
 
 const showNotes = function () {
     notes.forEach(function (note, id) {
@@ -101,3 +114,44 @@ const editNote = function () {
     })
 }
 editNote()
+
+const showSettings = function () {
+    const settingsButton = document.querySelector('#buttonSettings')
+    settingsButton.addEventListener('click', function (e) {
+        $("#settingsModal").modal('toggle')
+    })
+}
+showSettings()
+
+const settingsHandler = function () {
+    const wipeAllButton = document.querySelector('#wipeAll')
+    const wipeAllSettings = function () {
+        wipeAllButton.addEventListener('click', function () {
+            localStorage.setItem('notes', '')
+            localStorage.getItem('notes')
+            $("#settingsModal").modal('hide')
+            location.reload()
+        })
+    }
+    wipeAllSettings()
+    const lightThemeButton = document.querySelector('#lightTheme')
+    const darkThemeButton = document.querySelector('#darkTheme')
+    const selectedTheme = localStorage.getItem('theme')
+    const themeCheckboxChecker = function () {
+        if (selectedTheme === 'dark') {
+            darkThemeButton.checked = true
+        } else if (selectedTheme === 'light') {
+            lightThemeButton.checked = true
+        } else {
+            return
+        }
+    }
+    themeCheckboxChecker()
+    const themeSaver = function () {
+        lightThemeButton.addEventListener('click', (e) => (localStorage.setItem('theme', 'light'), setTheme()))
+        darkThemeButton.addEventListener('click', (e) => (localStorage.setItem('theme', 'dark'), setTheme()))
+    }
+    themeSaver()
+
+}
+settingsHandler()
