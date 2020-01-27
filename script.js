@@ -59,6 +59,11 @@ const editNote = function () {
             const buttonRemoveNote = document.querySelector('#removeNote')
             const containerId = this.id
             const colorPicker = document.querySelector('#colorValue')
+            const presets = {
+                done: document.querySelector('#presetDone'),
+                important: document.querySelector('#presetImportant'),
+                neutral: document.querySelector('#presetNeutral')
+            }
             $("#editModal").modal('toggle')
             modalTextArea.value = e.target.innerHTML
             if (notesArray[this.id].color != undefined) {
@@ -86,6 +91,9 @@ const editNote = function () {
                 $("#editModal").modal('hide')
                 location.reload()
             })
+            presets.done.addEventListener('click', function (e) {colorPicker.value = '57EB55'; colorPicker.style.background = '#57EB55'})
+            presets.important.addEventListener('click', function (e) {colorPicker.value = 'EB6565'; colorPicker.style.background = '#EB6565'})
+            presets.neutral.addEventListener('click', function (e) {colorPicker.value = '63BCEB'; colorPicker.style.background = '#63BCEB'})
         })
     })
 }

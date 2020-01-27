@@ -26,6 +26,9 @@ body {
         h1 {
             font-size: 1.6rem;
             @media (min-width: 701px) {
+                font-size: 2rem;
+            }
+            @media (min-width: 1400px) {
                 font-size: 2.4rem;
             }
         }
@@ -55,5 +58,14 @@ body {
         border: 1px solid;
         border-radius: 6px;
         padding: 0 0 0 .3rem;
+    }
+    #editNoteValue {
+        resize: none;
+        border: 1px solid;
+        border-radius: 6px;
+    }
+    .preset {
+        margin: 0 .2rem;
+        border-bottom: 2px dotted;
     }
 }

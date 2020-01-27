@@ -45,8 +45,15 @@
           </button>
         </div>
         <div class="modal-body">
-          <textarea style="resize: none;" class="w-100 h-100 p-1" name="" id="editNoteValue"></textarea>
-          Color: <input id="colorValue" class="jscolor" value="EBEB00">
+          <textarea class="w-100 h-100 p-1" name="" id="editNoteValue"></textarea>
+          <div class="mt-md-2">Color: <input id="colorValue" class="jscolor" value="EBEB00"></div>
+          <div class="d-flex mt-2">
+            <span class="mr-1">Templates:</span>
+            <span id="presetImportant" class="text-danger preset">Important</span>
+            <span id="presetDone" class="text-success preset">Done</span>
+            <span id="presetNeutral" class="text-info preset">Neutral</span>
+          </div>
+          
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
