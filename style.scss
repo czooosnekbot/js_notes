@@ -63,9 +63,13 @@ body {
         resize: none;
         border: 1px solid;
         border-radius: 6px;
+        @media (min-width: 701px) {
+            min-height: 100px;
+        }
     }
     .preset {
         margin: 0 .2rem;
         border-bottom: 2px dotted;
+        cursor: pointer;
     }
 }

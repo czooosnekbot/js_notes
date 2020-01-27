@@ -62,7 +62,8 @@ const editNote = function () {
             const presets = {
                 done: document.querySelector('#presetDone'),
                 important: document.querySelector('#presetImportant'),
-                neutral: document.querySelector('#presetNeutral')
+                neutral: document.querySelector('#presetNeutral'),
+                default: document.querySelector('#presetDefault')
             }
             $("#editModal").modal('toggle')
             modalTextArea.value = e.target.innerHTML
@@ -94,6 +95,7 @@ const editNote = function () {
             presets.done.addEventListener('click', function (e) {colorPicker.value = '57EB55'; colorPicker.style.background = '#57EB55'})
             presets.important.addEventListener('click', function (e) {colorPicker.value = 'EB6565'; colorPicker.style.background = '#EB6565'})
             presets.neutral.addEventListener('click', function (e) {colorPicker.value = '63BCEB'; colorPicker.style.background = '#63BCEB'})
+            presets.default.addEventListener('click', function (e) {colorPicker.value = 'EBEB00'; colorPicker.style.background = '#EBEB00'})
         })
     })
 }
