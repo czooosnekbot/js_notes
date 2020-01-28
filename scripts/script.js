@@ -1,16 +1,24 @@
 const noteAddForm = document.querySelector('#add-note')
 const noteContentInput = document.querySelector('#content-note')
 let notes = []
-
+let customStyles = []
+let customStylesValues = customStyles
+let customStylesAmount = customStyles.length
 const notesJSON = localStorage.getItem('notes')
+const customStylesJSON = localStorage.getItem('customStyles')
 if (notesJSON !== null & notesJSON !== '') {
     notes = JSON.parse(notesJSON)
+    customStyles = JSON.parse(customStylesJSON)
 }
 
 const updateLocalStorage = function () {
     localStorage.setItem('notes', JSON.stringify(notes))
     localStorage.getItem('notes')
+    localStorage.setItem('customs', JSON.stringify(customStylesValues))
+    localStorage.getItem('customs')
 }
+
+console.log(customStylesValues)
 
 const setTheme = function () {
     const stylesheet = document.querySelector('#stylesheetLink')
@@ -88,14 +96,14 @@ const editNote = function () {
                 colorPicker.value = 'Brak'
             }
             buttonSaveNote.addEventListener('click', function (e) {
-                const pushChanges = function () {
+                const pushNotesChanges = function () {
                     notesArray[containerId] = {
                         content: modalTextArea.value,
                         changed: new Date(),
                         color: colorPicker.value
                     }
                 }
-                pushChanges()
+                pushNotesChanges()
                 updateLocalStorage()
                 $("#editModal").modal('hide')
                 location.reload()
@@ -110,6 +118,7 @@ const editNote = function () {
             presets.important.addEventListener('click', (e) => (colorPicker.value = 'EB6565', colorPicker.style.background = '#EB6565'))
             presets.neutral.addEventListener('click', (e) => (colorPicker.value = '63BCEB', colorPicker.style.background = '#63BCEB'))
             presets.default.addEventListener('click', (e) => (colorPicker.value = 'EBEB00', colorPicker.style.background = '#EBEB00'))
+            colorPicker.addEventListener('change', (e) => (saveStyleButton.style = `border: 1px solid #${e.target.value} !important`))
         })
     })
 }
@@ -137,7 +146,7 @@ const settingsHandler = function () {
     const lightThemeButton = document.querySelector('#lightTheme')
     const darkThemeButton = document.querySelector('#darkTheme')
     const selectedTheme = localStorage.getItem('theme')
-    const themeCheckboxChecker = function () {
+    const themeRadioboxChecker = function () {
         if (selectedTheme === 'dark') {
             darkThemeButton.checked = true
         } else if (selectedTheme === 'light') {
@@ -146,12 +155,46 @@ const settingsHandler = function () {
             return
         }
     }
-    themeCheckboxChecker()
-    const themeSaver = function () {
+    themeRadioboxChecker()
+    const themeApplier = function () {
         lightThemeButton.addEventListener('click', (e) => (localStorage.setItem('theme', 'light'), setTheme()))
         darkThemeButton.addEventListener('click', (e) => (localStorage.setItem('theme', 'dark'), setTheme()))
     }
-    themeSaver()
-
+    themeApplier()
 }
 settingsHandler()
+
+const customThemesHandler = function () {
+    const customTemplatesSaver = function () {
+        const templatesSaverButton = document.querySelector('#saveStyleButton')
+        templatesSaverButton.addEventListener('click', function (e) {
+            const colorPicker = document.querySelector('#colorValue')
+            customStylesValues.push({
+                style: colorPicker.value,
+                name: `Styl ${(customStylesAmount + 1)}`
+            })
+            console.log(customStylesAmount)
+            updateLocalStorage()
+        })
+    }
+    customTemplatesSaver()
+    const customTemplatesShower = function () {
+        const templatesLabel = document.createElement('span')
+        const templatesMenu = document.querySelector('#avaibleStyles')
+        if (customStylesAmount === 0) {
+            templatesLabel.textContent = 'You have no saved custom styles!'
+            templatesMenu.appendChild(templatesLabel)
+        } else {
+            const templatesLister = function () {
+                customStylesValues.forEach(function (value, name) {
+                    templatesLabel.textContent = name
+                    templatesLabel.style.color = `#${value}`
+                    templatesMenu.appendChild(templatesLabel)
+                })
+            }
+            templatesLister()
+        }
+    }
+    customTemplatesShower()
+}
+customThemesHandler()
