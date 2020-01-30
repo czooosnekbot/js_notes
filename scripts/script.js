@@ -137,6 +137,8 @@ const settingsHandler = function () {
         wipeAllButton.addEventListener('click', function () {
             localStorage.setItem('notes', '')
             localStorage.getItem('notes')
+            localStorage.setItem('customs', '')
+            localStorage.getItem('customs')
             $("#settingsModal").modal('hide')
             location.reload()
         })
