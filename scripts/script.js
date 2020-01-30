@@ -19,8 +19,6 @@ const updateLocalStorage = function () {
     localStorage.getItem('customs')
 }
 
-console.log(customStyles)
-
 const setTheme = function () {
     const stylesheet = document.querySelector('#stylesheetLink')
     const selectedTheme = localStorage.getItem('theme')
@@ -167,28 +165,48 @@ const customThemesHandler = function () {
     const customTemplatesSaver = function () {
         const templatesSaverButton = document.querySelector('#saveStyleButton')
         templatesSaverButton.addEventListener('click', function (e) {
-            const colorPicker = document.querySelector('#colorValue')
-            customStyles.push({
-                style: colorPicker.value,
-                name: `Style ${(customStyles.length + 1)}`
-            })
-            console.log(customStyles)
-            updateLocalStorage()
+            if (customStyles.length > 5) {
+                templatesSaverButton.style = 'transition: .6s; color: gray; background: rgba(227, 91, 64, .2)'
+                templatesSaverButton.textContent = 'Only 6 styles allowed!'
+            } else {
+                const colorPicker = document.querySelector('#colorValue')
+                customStyles.push({
+                    style: colorPicker.value,
+                    name: `Style ${(customStyles.length + 1)}`
+                })
+                console.log(customStyles)
+                updateLocalStorage()
+                customTemplatesShower()
+            }
         })
     }   
     customTemplatesSaver()
     const customTemplatesShower = function () {
+        const templatesListRefresher = function () {
+            const container1 = document.querySelector('.availableStyles')
+            const container2New = document.createElement('div')
+            const container2Rendered = document.querySelector('#renderedStyles')
+            if (container2Rendered) {
+                container2Rendered.remove()
+                container2New.id = 'renderedStyles'
+                container1.appendChild(container2New)
+            } else {
+                container2New.id = 'renderedStyles'
+                container1.appendChild(container2New)
+            }
+        }
+        templatesListRefresher()
         const colorPicker = document.querySelector('#colorValue')
         if (customStyles.length === 0) {
             const noTemplatesLabel = document.createElement('span')
-            const templatesMenu = document.querySelector('.avaibleStyles')
+            const templatesMenu = document.querySelector('#renderedStyles')
             noTemplatesLabel.textContent = 'You have no saved custom styles!'
             templatesMenu.appendChild(noTemplatesLabel)
         } else {
             const templatesLister = function () {
                 customStyles.forEach(function (template, style, name) {
                     const templatesLabel = document.createElement('span')
-                    const templatesMenu = document.querySelector('.avaibleStyles')
+                    const templatesMenu = document.querySelector('#renderedStyles')
                     console.log(template)
                     templatesLabel.textContent = template.name
                     templatesLabel.style = `color: #${template.style}; padding-left: .4rem;`
