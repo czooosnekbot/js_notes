@@ -47,7 +47,7 @@
         </div>
         <div class="modal-body">
           <textarea class="w-100 h-100 p-1" name="" id="editNoteValue"></textarea>
-          <div class="mt-md-2 edit-description">Color: <input id="colorValue" class="jscolor" value="EBEB00"></div>
+          <div class="mt-md-2 edit-description">Color: <input id="colorValue" class="jscolor" value="EBEB00"><span id="saveStyleButton" class="ml-2 p-1 border rounded">Save as style</span></div>
           <div class="d-flex mt-2">
             <span class="mr-1 edit-description">Templates:</span>
             <span id="presetDefault" class="text-warning preset">Default</span>
@@ -55,7 +55,12 @@
             <span id="presetDone" class="text-success preset">Done</span>
             <span id="presetNeutral" class="text-info preset">Neutral</span>
           </div>
-          
+          <div class="d-flex mt-2">
+            <span class="mr-1 edit-description">Saved styles:</span>
+            <div class="avaibleStyles">
+              
+            </div>
+          </div>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -84,7 +89,8 @@
           </div>
         </div>
         <div class="modal-footer">
-          <button id="saveNote" type="button" class="btn btn-primary disabled">Auto-save is on!</button>
+          <button type="button" class="btn btn-info" data-dismiss="modal">Close</button>
+          <button id="saveNote" type="button" class="btn btn-secondary disabled">Auto-save is on!</button>
         </div>
       </div>
     </div>

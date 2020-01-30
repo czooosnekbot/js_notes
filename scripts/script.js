@@ -1,24 +1,31 @@
 const noteAddForm = document.querySelector('#add-note')
 const noteContentInput = document.querySelector('#content-note')
 let notes = []
+let customStyles = []
 
 const notesJSON = localStorage.getItem('notes')
+const customStylesJSON = localStorage.getItem('customs')
 if (notesJSON !== null & notesJSON !== '') {
     notes = JSON.parse(notesJSON)
+}
+if (customStylesJSON !== null & customStylesJSON !== '') {
+    customStyles = JSON.parse(customStylesJSON)
 }
 
 const updateLocalStorage = function () {
     localStorage.setItem('notes', JSON.stringify(notes))
     localStorage.getItem('notes')
+    localStorage.setItem('customs', JSON.stringify(customStyles))
+    localStorage.getItem('customs')
 }
+
+console.log(customStyles)
 
 const setTheme = function () {
     const stylesheet = document.querySelector('#stylesheetLink')
     const selectedTheme = localStorage.getItem('theme')
     if (selectedTheme === 'dark') {
         stylesheet.href = './css/dark.css'
-    } else if (selectedTheme === 'light') {
-        stylesheet.href = './css/style.css'
     } else {
         stylesheet.href = './css/style.css'
     }
@@ -45,7 +52,7 @@ const refreshNotes = function () {
 }
 
 const newNote = function () {
-    noteAddForm.addEventListener('submit', function(e, note) {
+    noteAddForm.addEventListener('submit', function(e) {
         e.preventDefault()
         refreshNotes()
         notes.push({
@@ -88,14 +95,14 @@ const editNote = function () {
                 colorPicker.value = 'Brak'
             }
             buttonSaveNote.addEventListener('click', function (e) {
-                const pushChanges = function () {
+                const pushNotesChanges = function () {
                     notesArray[containerId] = {
                         content: modalTextArea.value,
                         changed: new Date(),
                         color: colorPicker.value
                     }
                 }
-                pushChanges()
+                pushNotesChanges()
                 updateLocalStorage()
                 $("#editModal").modal('hide')
                 location.reload()
@@ -110,6 +117,7 @@ const editNote = function () {
             presets.important.addEventListener('click', (e) => (colorPicker.value = 'EB6565', colorPicker.style.background = '#EB6565'))
             presets.neutral.addEventListener('click', (e) => (colorPicker.value = '63BCEB', colorPicker.style.background = '#63BCEB'))
             presets.default.addEventListener('click', (e) => (colorPicker.value = 'EBEB00', colorPicker.style.background = '#EBEB00'))
+            colorPicker.addEventListener('change', (e) => (saveStyleButton.style = `border: 1px solid #${e.target.value} !important`))
         })
     })
 }
@@ -137,21 +145,61 @@ const settingsHandler = function () {
     const lightThemeButton = document.querySelector('#lightTheme')
     const darkThemeButton = document.querySelector('#darkTheme')
     const selectedTheme = localStorage.getItem('theme')
-    const themeCheckboxChecker = function () {
+    const themeRadioboxChecker = function () {
         if (selectedTheme === 'dark') {
             darkThemeButton.checked = true
-        } else if (selectedTheme === 'light') {
-            lightThemeButton.checked = true
         } else {
-            return
+            lightThemeButton.checked = true
         }
     }
-    themeCheckboxChecker()
-    const themeSaver = function () {
+    themeRadioboxChecker()
+    const themeApplier = function () {
         lightThemeButton.addEventListener('click', (e) => (localStorage.setItem('theme', 'light'), setTheme()))
         darkThemeButton.addEventListener('click', (e) => (localStorage.setItem('theme', 'dark'), setTheme()))
     }
-    themeSaver()
-
+    themeApplier()
 }
 settingsHandler()
+
+const customThemesHandler = function () {
+    const customTemplatesSaver = function () {
+        const templatesSaverButton = document.querySelector('#saveStyleButton')
+        templatesSaverButton.addEventListener('click', function (e) {
+            const colorPicker = document.querySelector('#colorValue')
+            customStyles.push({
+                style: colorPicker.value,
+                name: `Style ${(customStyles.length + 1)}`
+            })
+            console.log(customStyles)
+            updateLocalStorage()
+        })
+    }   
+    customTemplatesSaver()
+    const customTemplatesShower = function () {
+        const colorPicker = document.querySelector('#colorValue')
+        if (customStyles.length === 0) {
+            const noTemplatesLabel = document.createElement('span')
+            const templatesMenu = document.querySelector('.avaibleStyles')
+            noTemplatesLabel.textContent = 'You have no saved custom styles!'
+            templatesMenu.appendChild(noTemplatesLabel)
+        } else {
+            const templatesLister = function () {
+                customStyles.forEach(function (template, style, name) {
+                    const templatesLabel = document.createElement('span')
+                    const templatesMenu = document.querySelector('.avaibleStyles')
+                    console.log(template)
+                    templatesLabel.textContent = template.name
+                    templatesLabel.style = `color: #${template.style}; padding-left: .4rem;`
+                    templatesLabel.addEventListener('click', function (e) {
+                        colorPicker.value = template.style
+                        colorPicker.style.background = `#${template.style}`
+                    })
+                    templatesMenu.appendChild(templatesLabel)
+                })
+            }
+            templatesLister()
+        }
+    }
+    customTemplatesShower()
+}
+customThemesHandler()
