@@ -2,31 +2,30 @@ const noteAddForm = document.querySelector('#add-note')
 const noteContentInput = document.querySelector('#content-note')
 let notes = []
 let customStyles = []
-let customStylesValues = customStyles
-let customStylesAmount = customStyles.length
+
 const notesJSON = localStorage.getItem('notes')
 const customStylesJSON = localStorage.getItem('customStyles')
 if (notesJSON !== null & notesJSON !== '') {
     notes = JSON.parse(notesJSON)
+}
+if (customStylesJSON !== null & customStylesJSON !== '') {
     customStyles = JSON.parse(customStylesJSON)
 }
 
 const updateLocalStorage = function () {
     localStorage.setItem('notes', JSON.stringify(notes))
     localStorage.getItem('notes')
-    localStorage.setItem('customs', JSON.stringify(customStylesValues))
+    localStorage.setItem('customs', JSON.stringify(customStyles))
     localStorage.getItem('customs')
 }
 
-console.log(customStylesValues)
+console.log(customStyles)
 
 const setTheme = function () {
     const stylesheet = document.querySelector('#stylesheetLink')
     const selectedTheme = localStorage.getItem('theme')
     if (selectedTheme === 'dark') {
         stylesheet.href = './css/dark.css'
-    } else if (selectedTheme === 'light') {
-        stylesheet.href = './css/style.css'
     } else {
         stylesheet.href = './css/style.css'
     }
@@ -53,7 +52,7 @@ const refreshNotes = function () {
 }
 
 const newNote = function () {
-    noteAddForm.addEventListener('submit', function(e, note) {
+    noteAddForm.addEventListener('submit', function(e) {
         e.preventDefault()
         refreshNotes()
         notes.push({
@@ -149,10 +148,8 @@ const settingsHandler = function () {
     const themeRadioboxChecker = function () {
         if (selectedTheme === 'dark') {
             darkThemeButton.checked = true
-        } else if (selectedTheme === 'light') {
-            lightThemeButton.checked = true
         } else {
-            return
+            lightThemeButton.checked = true
         }
     }
     themeRadioboxChecker()
@@ -169,24 +166,24 @@ const customThemesHandler = function () {
         const templatesSaverButton = document.querySelector('#saveStyleButton')
         templatesSaverButton.addEventListener('click', function (e) {
             const colorPicker = document.querySelector('#colorValue')
-            customStylesValues.push({
+            customStyles.push({
                 style: colorPicker.value,
-                name: `Styl ${(customStylesAmount + 1)}`
+                name: `Styl ${(customStyles.length + 1)}`
             })
-            console.log(customStylesAmount)
+            console.log(customStyles)
             updateLocalStorage()
         })
-    }
+    }   
     customTemplatesSaver()
     const customTemplatesShower = function () {
         const templatesLabel = document.createElement('span')
         const templatesMenu = document.querySelector('#avaibleStyles')
-        if (customStylesAmount === 0) {
+        if (customStyles.length === 0) {
             templatesLabel.textContent = 'You have no saved custom styles!'
             templatesMenu.appendChild(templatesLabel)
         } else {
             const templatesLister = function () {
-                customStylesValues.forEach(function (value, name) {
+                customStyles.forEach(function (value, name) {
                     templatesLabel.textContent = name
                     templatesLabel.style.color = `#${value}`
                     templatesMenu.appendChild(templatesLabel)
