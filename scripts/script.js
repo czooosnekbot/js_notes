@@ -4,7 +4,7 @@ let notes = []
 let customStyles = []
 
 const notesJSON = localStorage.getItem('notes')
-const customStylesJSON = localStorage.getItem('customStyles')
+const customStylesJSON = localStorage.getItem('customs')
 if (notesJSON !== null & notesJSON !== '') {
     notes = JSON.parse(notesJSON)
 }
@@ -168,7 +168,7 @@ const customThemesHandler = function () {
             const colorPicker = document.querySelector('#colorValue')
             customStyles.push({
                 style: colorPicker.value,
-                name: `Styl ${(customStyles.length + 1)}`
+                name: `Style ${(customStyles.length + 1)}`
             })
             console.log(customStyles)
             updateLocalStorage()
@@ -176,16 +176,24 @@ const customThemesHandler = function () {
     }   
     customTemplatesSaver()
     const customTemplatesShower = function () {
-        const templatesLabel = document.createElement('span')
-        const templatesMenu = document.querySelector('#avaibleStyles')
+        const colorPicker = document.querySelector('#colorValue')
         if (customStyles.length === 0) {
-            templatesLabel.textContent = 'You have no saved custom styles!'
-            templatesMenu.appendChild(templatesLabel)
+            const noTemplatesLabel = document.createElement('span')
+            const templatesMenu = document.querySelector('.avaibleStyles')
+            noTemplatesLabel.textContent = 'You have no saved custom styles!'
+            templatesMenu.appendChild(noTemplatesLabel)
         } else {
             const templatesLister = function () {
-                customStyles.forEach(function (value, name) {
-                    templatesLabel.textContent = name
-                    templatesLabel.style.color = `#${value}`
+                customStyles.forEach(function (template, style, name) {
+                    const templatesLabel = document.createElement('span')
+                    const templatesMenu = document.querySelector('.avaibleStyles')
+                    console.log(template)
+                    templatesLabel.textContent = template.name
+                    templatesLabel.style = `color: #${template.style}; padding-left: .4rem;`
+                    templatesLabel.addEventListener('click', function (e) {
+                        colorPicker.value = template.style
+                        colorPicker.style.background = `#${template.style}`
+                    })
                     templatesMenu.appendChild(templatesLabel)
                 })
             }
