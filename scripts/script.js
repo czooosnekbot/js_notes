@@ -165,10 +165,17 @@ const settingsHandler = function () {
     }
     themeApplier()
     const customThemesManager = function () {
+        const customsDropdownRenderedItems = document.querySelectorAll('.customsmanagerlist')
+        if (customsDropdownRenderedItems !== 0) {
+            customsDropdownRenderedItems.forEach(function (elem) {
+                elem.remove()
+            })
+        }
         if (customStyles.length !== 0) {
             customStyles.forEach(function (custom, style, name) {
                 const customsDropdown = document.querySelector('#customsManager')
                 const customsDropdownItem = document.createElement('option')
+                customsDropdownItem.className = 'customsmanagerlist'
                 customsDropdownItem.textContent = custom.name
                 customsDropdown.appendChild(customsDropdownItem)
             })
@@ -183,9 +190,9 @@ const settingsHandler = function () {
 const showSettings = function () {
     const settingsButton = document.querySelector('#buttonSettings')
     settingsButton.addEventListener('click', function (e) {
+        settingsHandler()
         $("#settingsModal").modal('toggle')
-    })
-    settingsHandler()
+    })    
 }
 showSettings()
 
