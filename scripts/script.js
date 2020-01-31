@@ -121,18 +121,12 @@ const editNote = function () {
 }
 editNote()
 
-const showSettings = function () {
-    const settingsButton = document.querySelector('#buttonSettings')
-    settingsButton.addEventListener('click', function (e) {
-        $("#settingsModal").modal('toggle')
-    })
-}
-showSettings()
-
 const settingsHandler = function () {
     const wipeAllButton = document.querySelector('#wipeAll')
-    const wipeAllSettings = function () {
-        wipeAllButton.addEventListener('click', function () {
+    const wipeNotesButton = document.querySelector('#wipeNotes')
+    const wipeCustomsButton = document.querySelector('#wipeCustoms')
+    const wipeHandler = function () {
+        wipeAllButton.addEventListener('click', function (e) {
             localStorage.setItem('notes', '')
             localStorage.getItem('notes')
             localStorage.setItem('customs', '')
@@ -140,8 +134,20 @@ const settingsHandler = function () {
             $("#settingsModal").modal('hide')
             location.reload()
         })
+        wipeNotesButton.addEventListener('click', function (e) {
+            localStorage.setItem('notes', '')
+            localStorage.getItem('notes')
+            $("#settingsModal").modal('hide')
+            location.reload()
+        })
+        wipeCustomsButton.addEventListener('click', function (e) {
+            localStorage.setItem('customs', '')
+            localStorage.getItem('customs')
+            $("#settingsModal").modal('hide')
+            location.reload()
+        })
     }
-    wipeAllSettings()
+    wipeHandler()
     const lightThemeButton = document.querySelector('#lightTheme')
     const darkThemeButton = document.querySelector('#darkTheme')
     const selectedTheme = localStorage.getItem('theme')
@@ -158,8 +164,30 @@ const settingsHandler = function () {
         darkThemeButton.addEventListener('click', (e) => (localStorage.setItem('theme', 'dark'), setTheme()))
     }
     themeApplier()
+    const customThemesManager = function () {
+        if (customStyles.length !== 0) {
+            customStyles.forEach(function (custom, style, name) {
+                const customsDropdown = document.querySelector('#customsManager')
+                const customsDropdownItem = document.createElement('option')
+                customsDropdownItem.textContent = custom.name
+                customsDropdown.appendChild(customsDropdownItem)
+            })
+        } else {
+            const customsManagerButton = document.querySelector('#customsManagerButton')
+            customsManagerButton.className = 'ml-2 btn btn-info text-center disabled'
+        }
+    }
+    customThemesManager()
 }
-settingsHandler()
+
+const showSettings = function () {
+    const settingsButton = document.querySelector('#buttonSettings')
+    settingsButton.addEventListener('click', function (e) {
+        $("#settingsModal").modal('toggle')
+    })
+    settingsHandler()
+}
+showSettings()
 
 const customThemesHandler = function () {
     const customTemplatesSaver = function () {

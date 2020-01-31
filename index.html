@@ -82,10 +82,23 @@
           </button>
         </div>
         <div class="modal-body">
-          <a id="wipeAll" class="btn btn-danger text-white">Wipe user's data</a>
+          <span class="h3">Danger zone</span>
+          <div class="w-100">
+            <a id="wipeAll" class="btn btn-danger text-white mt-2 mb-1">Wipe all data</a>
+            <a id="wipeNotes" class="btn btn-danger text-white mt-2 mb-1">Wipe notes</a>
+            <a id="wipeCustoms" class="btn btn-danger text-white mt-2 mb-1">Wipe customs</a>
+          </div>
+          <span class="h3">Theme's settings</span>
           <div class="d-flex align-items-center w-100 mt-2">
             <input class="mr-1" type="radio" name="theme" id="lightTheme"><label class="m-0 mr-3" for="lightTheme">Light theme</label>
             <input class="mr-1" type="radio" name="theme" id="darkTheme"><label class="m-0" for="darkTheme">Dark theme</label class="m-0 mr-3">
+          </div>
+          <span class="h3">Custom's settings</span>
+          <div class="d-flex mt-2">
+            <select name="" id="customsManager">
+              
+            </select>
+            <span class="ml-2 btn btn-info text-center" id="customsManagerButton">Delete</span>
           </div>
         </div>
         <div class="modal-footer">
