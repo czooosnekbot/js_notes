@@ -43,10 +43,10 @@ const showNotes = function () {
 showNotes()
 
 const refreshNotes = function () {
-    document.querySelector('.content').remove()
-    let refreshedContainer = document.createElement('div')
-    refreshedContainer.className = 'content col-12 col-md-10 d-flex align-items-start flex-wrap'
-    document.querySelector('.notes-container').appendChild(refreshedContainer)
+    const stickyNotes = document.querySelectorAll('.note')
+    stickyNotes.forEach(function (note) {
+        note.remove()
+    })
 }
 
 const newNote = function () {
@@ -178,6 +178,7 @@ const settingsHandler = function () {
                 customsDropdownItem.className = 'customsmanagerlist'
                 customsDropdownItem.textContent = custom.name
                 customsDropdown.appendChild(customsDropdownItem)
+                customsManagerButton.className = 'ml-2 btn btn-info text-center'
             })
         } else {
             const customsManagerButton = document.querySelector('#customsManagerButton')
@@ -236,6 +237,7 @@ const customThemesHandler = function () {
             const noTemplatesLabel = document.createElement('span')
             const templatesMenu = document.querySelector('#renderedStyles')
             noTemplatesLabel.textContent = 'You have no saved custom styles!'
+            noTemplatesLabel.id = 'noSavedCustoms'
             templatesMenu.appendChild(noTemplatesLabel)
         } else {
             const templatesLister = function () {

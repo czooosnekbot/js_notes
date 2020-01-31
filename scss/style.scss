@@ -91,4 +91,16 @@ body {
         width: 100px;
         height: 35px;
     }
+    #renderedStyles {
+        span {
+            cursor: pointer;
+        }
+    }
+    #saveStyleButton {
+        cursor: pointer;
+    }
+    #noSavedCustoms {
+        color: black;
+        cursor: unset !important;
+    }
 }

@@ -99,6 +99,18 @@ body {
         width: 100px;
         height: 35px;
     }
+    #renderedStyles {
+        span {
+            cursor: pointer;
+        }
+    }
+    #saveStyleButton {
+        cursor: pointer;
+    }
+    #noSavedCustoms {
+        color: rgb(228, 228, 228) !important;
+        cursor: unset !important;
+    }
 }
 
 .modal {
