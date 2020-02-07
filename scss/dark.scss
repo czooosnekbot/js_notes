@@ -89,19 +89,44 @@ body {
             font-weight: 600;
         }
     }
+    #customsManager {
+        border: 1px solid white;
+        border-radius: 6px;
+        width: 100px;
+        height: 35px;
+    }
+    #customsManagerButton {
+        width: 100px;
+        height: 35px;
+    }
+    #renderedStyles {
+        span {
+            cursor: pointer;
+        }
+    }
+    #saveStyleButton {
+        cursor: pointer;
+    }
+    #noSavedCustoms {
+        color: rgb(228, 228, 228) !important;
+        cursor: unset !important;
+    }
 }
 
 .modal {
     border-radius: 20px !important;
     &-header {
         background: rgb(32, 32, 32) !important;
-        h5, span {
+        .h3, h5, span {
             color: rgb(228, 228, 228) !important;
         }
         border-bottom: 1px solid;
     }
     &-body {
         background: rgb(37, 37, 37) !important;
+        .h3, h5 {
+            color: rgb(228, 228, 228) !important;
+        }
     }
     label {
         color: rgb(228, 228, 228) !important;

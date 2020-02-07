@@ -43,10 +43,10 @@ const showNotes = function () {
 showNotes()
 
 const refreshNotes = function () {
-    document.querySelector('.content').remove()
-    let refreshedContainer = document.createElement('div')
-    refreshedContainer.className = 'content col-12 col-md-10 d-flex align-items-start flex-wrap'
-    document.querySelector('.notes-container').appendChild(refreshedContainer)
+    const stickyNotes = document.querySelectorAll('.note')
+    stickyNotes.forEach(function (note) {
+        note.remove()
+    })
 }
 
 const newNote = function () {
@@ -121,18 +121,12 @@ const editNote = function () {
 }
 editNote()
 
-const showSettings = function () {
-    const settingsButton = document.querySelector('#buttonSettings')
-    settingsButton.addEventListener('click', function (e) {
-        $("#settingsModal").modal('toggle')
-    })
-}
-showSettings()
-
 const settingsHandler = function () {
     const wipeAllButton = document.querySelector('#wipeAll')
-    const wipeAllSettings = function () {
-        wipeAllButton.addEventListener('click', function () {
+    const wipeNotesButton = document.querySelector('#wipeNotes')
+    const wipeCustomsButton = document.querySelector('#wipeCustoms')
+    const wipeHandler = function () {
+        wipeAllButton.addEventListener('click', function (e) {
             localStorage.setItem('notes', '')
             localStorage.getItem('notes')
             localStorage.setItem('customs', '')
@@ -140,8 +134,20 @@ const settingsHandler = function () {
             $("#settingsModal").modal('hide')
             location.reload()
         })
+        wipeNotesButton.addEventListener('click', function (e) {
+            localStorage.setItem('notes', '')
+            localStorage.getItem('notes')
+            $("#settingsModal").modal('hide')
+            location.reload()
+        })
+        wipeCustomsButton.addEventListener('click', function (e) {
+            localStorage.setItem('customs', '')
+            localStorage.getItem('customs')
+            $("#settingsModal").modal('hide')
+            location.reload()
+        })
     }
-    wipeAllSettings()
+    wipeHandler()
     const lightThemeButton = document.querySelector('#lightTheme')
     const darkThemeButton = document.querySelector('#darkTheme')
     const selectedTheme = localStorage.getItem('theme')
@@ -158,8 +164,52 @@ const settingsHandler = function () {
         darkThemeButton.addEventListener('click', (e) => (localStorage.setItem('theme', 'dark'), setTheme()))
     }
     themeApplier()
+    const customThemesManager = function () {
+        const customsListerManager = function () {
+            const customsDropdownRenderedItems = document.querySelectorAll('.customsmanagerlist')
+            if (customsDropdownRenderedItems !== 0) {
+                customsDropdownRenderedItems.forEach(function (elem) {
+                    elem.remove()
+                })
+            }
+            if (customStyles.length !== 0) {
+                customStyles.forEach(function (custom, style, name) {
+                    const customsDropdown = document.querySelector('#customsManager')
+                    const customsDropdownItem = document.createElement('option')
+                    customsDropdownItem.className = 'customsmanagerlist'
+                    customsDropdownItem.textContent = custom.name
+                    customsDropdownItem.value = `customTheme${customStyles.indexOf(custom)}`
+                    customsDropdown.appendChild(customsDropdownItem)
+                    customsManagerButton.className = 'ml-2 btn btn-info text-center'
+                })
+            } else {
+                const customsManagerButton = document.querySelector('#customsManagerButton')
+                customsManagerButton.className = 'ml-2 btn btn-info text-center disabled'
+            }
+        }
+        const customsDeleter = function () {
+            const deleteButton = document.querySelector('#customsManagerButton')
+            deleteButton.addEventListener('click', function (e) {
+                const selected = $("#customsManager :selected").val();
+                const selectedId = selected.slice(11)
+                customStyles.splice(selectedId, 1)
+                updateLocalStorage()
+            })
+        }
+        customsListerManager()
+        customsDeleter()
+    }
+    customThemesManager()
 }
-settingsHandler()
+
+const showSettings = function () {
+    const settingsButton = document.querySelector('#buttonSettings')
+    settingsButton.addEventListener('click', function (e) {
+        settingsHandler()
+        $("#settingsModal").modal('toggle')
+    })    
+}
+showSettings()
 
 const customThemesHandler = function () {
     const customTemplatesSaver = function () {
@@ -201,6 +251,7 @@ const customThemesHandler = function () {
             const noTemplatesLabel = document.createElement('span')
             const templatesMenu = document.querySelector('#renderedStyles')
             noTemplatesLabel.textContent = 'You have no saved custom styles!'
+            noTemplatesLabel.id = 'noSavedCustoms'
             templatesMenu.appendChild(noTemplatesLabel)
         } else {
             const templatesLister = function () {

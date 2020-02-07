@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link href="data:image/x-icon;base64,AAABAAEAEBAAAAEAIABoBAAAFgAAACgAAAAQAAAAIAAAAAEAIAAAAAAAAAQAABILAAASCwAAAAAAAAAAAAAAAAAAAAAAANra2o/5+fm/29vbv8DAwL/BwcG/vr29v6qpqb+srKy/xsXFv9jY2L/r6+u/3d3dvYGBgQIAAAAAAAAAAAAAAAD///+///////////////////////////////////////////////////////////x/gIIDAAAAAAAAAAAAAAAA////v//////////////////////////////////////////////////////////8fn5/AwAAAAAAAAAAAAAAAP///7///////////////////////////////////////////////////////////Hx8fQMAAAAAAAAAAAAAAAD///+///////////////////////////////////////////////////////////yBgYIDAAAAAAAAAAAAAAAA////v///////////qf///9T////////////////////////////////////////8hYWGAwAAAAAAAAAAAAAAAP///7///////////////////5L///+M/////////////////////////////////IiIiQMAAAAAAAAAAAAAAAD///+////////////////////6////cv///4////////////////////////////yLi4wDAAAAAAAAAAAAAAAA////v/////////////////////////z///90////kv/////////////////////8jY2OAwAAAAAAAAAAAAAAAP///7///////////////////////////////P///3f//////////////////////I+PkAMAAAAAAAAAAAAAAAD///+///////////////////////////////////////////+qxP////////////yPj5ADAAAAAAAAAAAAAAAA////v//////////////////////////////////////////////////////////8kZGSAwAAAAAAAAAAAAAAAP///7///////////////////////////////////////////////////////////JGSkgMAAAAAAAAAAAAAAAD///+///////////////////////////////////////////////////////////yRkZEDAAAAAAAAAAAAAAAA////v//////////////////////////////////////////////////////////8kZGSAwAAAAAAAAAAAAAAAOnp6mD///+A////gP///4D///+A////gP///4D///+A////gP///4D///+A7e3ufpCQkQIAAAAAwAEAAMABAADAAQAAwAEAAMABAADAAQAAwAEAAMABAADAAQAAwAEAAMABAADAAQAAwAEAAMABAADAAQAAwAEAAA==" rel="icon" type="image/x-icon">
+    <link href="https://img.icons8.com/plasticine/100/000000/edit.png" rel="icon" type="image/x-icon">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css">
     <link id="stylesheetLink" rel="stylesheet" href="">
@@ -41,7 +41,7 @@
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title" id="exampleModalLabel">Edit this note</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <button id="exitModalButton" type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
@@ -63,7 +63,7 @@
           </div>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button id="closeModalButton" type="button" class="btn btn-secondary" data-dismiss="modal">Close</button id="closeModalButton">
           <button id="removeNote" type="button" class="btn btn-danger" data-dismiss="modal">Remove</button>
           <button id="saveNote" type="button" class="btn btn-primary">Save</button>
         </div>
@@ -82,10 +82,23 @@
           </button>
         </div>
         <div class="modal-body">
-          <a id="wipeAll" class="btn btn-danger text-white">Wipe user's data</a>
+          <span class="h3">Danger zone</span>
+          <div class="w-100">
+            <a id="wipeAll" class="btn btn-danger text-white mt-2 mb-1">Wipe all data</a>
+            <a id="wipeNotes" class="btn btn-danger text-white mt-2 mb-1">Wipe notes</a>
+            <a id="wipeCustoms" class="btn btn-danger text-white mt-2 mb-1">Wipe customs</a>
+          </div>
+          <span class="h3">Theme's settings</span>
           <div class="d-flex align-items-center w-100 mt-2">
             <input class="mr-1" type="radio" name="theme" id="lightTheme"><label class="m-0 mr-3" for="lightTheme">Light theme</label>
             <input class="mr-1" type="radio" name="theme" id="darkTheme"><label class="m-0" for="darkTheme">Dark theme</label class="m-0 mr-3">
+          </div>
+          <span class="h3">Custom's settings</span>
+          <div class="d-flex mt-2">
+            <select name="" id="customsManager">
+              
+            </select>
+            <span class="ml-2 btn btn-info text-center" id="customsManagerButton">Delete</span>
           </div>
         </div>
         <div class="modal-footer">
