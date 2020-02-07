@@ -165,25 +165,36 @@ const settingsHandler = function () {
     }
     themeApplier()
     const customThemesManager = function () {
-        const customsDropdownRenderedItems = document.querySelectorAll('.customsmanagerlist')
-        if (customsDropdownRenderedItems !== 0) {
-            customsDropdownRenderedItems.forEach(function (elem) {
-                elem.remove()
+        const customsListerManager = function () {
+            const customsDropdownRenderedItems = document.querySelectorAll('.customsmanagerlist')
+            if (customsDropdownRenderedItems !== 0) {
+                customsDropdownRenderedItems.forEach(function (elem) {
+                    elem.remove()
+                })
+            }
+            if (customStyles.length !== 0) {
+                customStyles.forEach(function (custom, style, name) {
+                    const customsDropdown = document.querySelector('#customsManager')
+                    const customsDropdownItem = document.createElement('option')
+                    customsDropdownItem.className = 'customsmanagerlist'
+                    customsDropdownItem.textContent = custom.name
+                    customsDropdownItem.value = `customTheme${customStyles.indexOf(custom)}`
+                    customsDropdown.appendChild(customsDropdownItem)
+                    customsManagerButton.className = 'ml-2 btn btn-info text-center'
+                })
+            } else {
+                const customsManagerButton = document.querySelector('#customsManagerButton')
+                customsManagerButton.className = 'ml-2 btn btn-info text-center disabled'
+            }
+        }
+        const customsDeleter = function () {
+            const deleteButton = document.querySelector('#customsManagerButton')
+            deleteButton.addEventListener('click', function (e) {
+                const selected = $("#customsManager :selected").val();
             })
         }
-        if (customStyles.length !== 0) {
-            customStyles.forEach(function (custom, style, name) {
-                const customsDropdown = document.querySelector('#customsManager')
-                const customsDropdownItem = document.createElement('option')
-                customsDropdownItem.className = 'customsmanagerlist'
-                customsDropdownItem.textContent = custom.name
-                customsDropdown.appendChild(customsDropdownItem)
-                customsManagerButton.className = 'ml-2 btn btn-info text-center'
-            })
-        } else {
-            const customsManagerButton = document.querySelector('#customsManagerButton')
-            customsManagerButton.className = 'ml-2 btn btn-info text-center disabled'
-        }
+        customsListerManager()
+        customsDeleter()
     }
     customThemesManager()
 }
