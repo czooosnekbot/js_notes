@@ -191,6 +191,9 @@ const settingsHandler = function () {
             const deleteButton = document.querySelector('#customsManagerButton')
             deleteButton.addEventListener('click', function (e) {
                 const selected = $("#customsManager :selected").val();
+                const selectedId = selected.slice(11)
+                customStyles.splice(selectedId, 1)
+                updateLocalStorage()
             })
         }
         customsListerManager()
