@@ -194,6 +194,7 @@ const settingsHandler = function () {
                 const selectedId = selected.slice(11)
                 customStyles.splice(selectedId, 1)
                 updateLocalStorage()
+                customsListerManager()
             })
         }
         customsListerManager()
